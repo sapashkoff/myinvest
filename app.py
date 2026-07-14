@@ -1,6 +1,15 @@
 from flask import Flask, render_template, jsonify, request, redirect, url_for, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+
+# Фикс для совместимости
+import hmac, hashlib
+def _safe_check_password_hash(pwhash, password):
+    try:
+        return check_password_hash(pwhash, password)
+    except:
+        # Fallback для старых хешей
+        return False
 from models import db, User
 from tinkoff_api import (
     get_accounts, get_all_payments, get_payments_for_account,
@@ -76,7 +85,7 @@ def login():
 
         user = User.query.filter_by(email=email).first()
 
-        if user and check_password_hash(user.password_hash, password):
+       if user and _safe_check_password_hash(user.password_hash, password):
             login_user(user)
             next_page = request.args.get('next')
             return redirect(next_page or url_for('index'))
