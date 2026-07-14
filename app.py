@@ -85,7 +85,7 @@ def login():
 
         user = User.query.filter_by(email=email).first()
 
-       if user and _safe_check_password_hash(user.password_hash, password):
+        if user and _safe_check_password_hash(user.password_hash, password):
             login_user(user)
             next_page = request.args.get('next')
             return redirect(next_page or url_for('index'))
