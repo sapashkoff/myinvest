@@ -3,6 +3,12 @@ import requests
 from dotenv import load_dotenv
 from datetime import datetime, timedelta, timezone
 
+def clear_cache():
+    """Очищает кеш (вызывается при смене пользователя)"""
+    global _instrument_cache, _accounts_cache
+    _instrument_cache = {}
+    _accounts_cache = None
+    
 load_dotenv()
 
 BASE_URL = "https://invest-public-api.tinkoff.ru/rest/"

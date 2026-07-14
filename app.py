@@ -126,10 +126,12 @@ def index():
 # ==================== API ====================
 
 def _set_token_for_request():
-    """Временно подставляет токен пользователя в переменные окружения"""
+    """Временно подставляет токен пользователя и очищает кеш"""
     token = current_user.get_token()
     if token:
         os.environ['TINKOFF_TOKEN'] = token
+        from tinkoff_api import clear_cache
+        clear_cache()
 
 
 @app.route('/api/payments')
