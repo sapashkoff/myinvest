@@ -1,0 +1,30 @@
+{% extends "base_auth.html" %}
+{% block content %}
+<div class="emoji">🚀</div>
+<h1>Регистрация</h1>
+<p class="subtitle">Создайте аккаунт для отслеживания выплат</p>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+    <div class="flash-{{ category }}">{{ message }}</div>
+  {% endfor %}
+{% endwith %}
+
+<form method="POST">
+    <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="your@email.com" required>
+    </div>
+    <div class="form-group">
+        <label>Пароль</label>
+        <input type="password" name="password" placeholder="Минимум 6 символов" required>
+    </div>
+    <div class="form-group">
+        <label>Повторите пароль</label>
+        <input type="password" name="password2" placeholder="Ещё раз" required>
+    </div>
+    <button type="submit" class="btn">Зарегистрироваться</button>
+</form>
+
+<a href="{{ url_for('login') }}" class="link">Уже есть аккаунт? Войти</a>
+{% endblock %}

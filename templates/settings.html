@@ -1,0 +1,31 @@
+{% extends "base_auth.html" %}
+{% block content %}
+<div class="emoji">🔑</div>
+<h1>Настройки</h1>
+<p class="subtitle">
+    {% if has_token %}
+    Токен сохранён ✅<br>Вы можете обновить его ниже
+    {% else %}
+    Введите токен Т-Инвестиций для начала работы
+    {% endif %}
+</p>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+    <div class="flash-{{ category }}">{{ message }}</div>
+  {% endfor %}
+{% endwith %}
+
+<form method="POST">
+    <div class="form-group">
+        <label>Токен Т-Инвестиций</label>
+        <input type="text" name="tinkoff_token" placeholder="t.xxxxxxxxxxxxxxxxxxxxx" required>
+    </div>
+    <button type="submit" class="btn">💾 Сохранить токен</button>
+</form>
+
+{% if has_token %}
+<a href="{{ url_for('index') }}" class="link">📊 Перейти к выплатам</a>
+{% endif %}
+<a href="{{ url_for('logout') }}" class="link" style="color: #999;">🚪 Выйти</a>
+{% endblock %}
